@@ -5,6 +5,7 @@ clc
 %% Constantes
 c = 3e8;            % [m/s] Speed light
 k = 1.38064852e-23; % [m2kg/s2K] 
+
 %% Data
 D_antenna = 5;      % [m]
 T_antenna = 40;     % [K]
@@ -32,7 +33,7 @@ GT = G - 10*log10(T_receiver);              % [dB]
 
 for s = 1:length(Angulos)
     for i = 1:length(Angulos(s).range)
-        R = Angulos(s).range(i);
+        R = Angulos(s).range(i)*1000;
         Lp(i,s) = 20*log10(4*pi*R/lambda);
     end
 end
@@ -46,7 +47,8 @@ for s = 1:length(Angulos)
 end
 
 %% PLOTS
-% h = figure();
+time = [0:10:Access(1).duration(1)*60];
+h = figure();
 hold on
 for s = 1:1
     [hAx,hLine1,hLine2] = plotyy(Angulos(s).t(1:33) , Angulos(s).range(1:33), Angulos(s).t(1:33), CN((1:33),s));
@@ -55,6 +57,7 @@ xlabel('UTC Time')
 ylabel(hAx(1),'Range [km]') % left y-axis
 ylabel(hAx(2),'C/N [dB]') % right y-axis
 grid on; box on;
+
 
 % PLOT 60 dias
 % h = figure();
