@@ -18,45 +18,51 @@ EIRP = 22;          % [dBW]
 La = 3;             % [dB] Losses due to gas abps, rain attenuation... 
 load('Angulos.mat');
 load('Access.mat');
+load('Pase.mat');
+load('idx.mat')
+load('MODCOD.mat');
 
-%% Antenna gain
+
+
+%% CN CALCULATION
+
+% Antenna gain
 lambda = c/f;
 G = 10*log10(rend_antenna*(pi*D_antenna/lambda)^2);
 
-%% Noise temperature of receiver
+% Noise temperature of receiver
 T_receiver = T_antenna + T0*(10^(NF/10)-1); % [K]
 
-%% G/T ground station
+% G/T ground station
 GT = G - 10*log10(T_receiver);              % [dB]
 
-%% Free space losses during the pass each 10 seconds
 
-for s = 1:length(Angulos)
-    for i = 1:length(Angulos(s).range)
+% C/N of the link
+
+for s = 1:length(Pase)
+    % Free space losses during the pass each 10 seconds
+    for i = 1:length(Pase(s).range)
         R = Angulos(s).range(i)*1000;
         Lp(i,s) = 20*log10(4*pi*R/lambda);
-    end
-end
-
-%% C/N of the link
-
-for s = 1:length(Angulos)
-    for i = 1:length(Angulos(s).range)
-        CN(i,s) = EIRP + GT - Lp(i,s) - La - 10*log10(k) - 10*log10(B);
+        Pase(s).CN{i} = EIRP + GT - Lp(i,s) - La - 10*log10(k) - 10*log10(B);
+        Pase(s).CN{}
     end
 end
 
 %% PLOTS
-time = [0:10:Access(1).duration(1)*60];
-for s = 1:length(Angulo(s).num)
+
+for s = 1:length(Access)
     h = figure(s);
     hold on
-    [hAx,hLine1,hLine2] = plotyy(Angulos(s).t(1:33) , Angulos(s).range(1:33), Angulos(s).t(1:33), CN((1:33),s));
+    [hAx,hLine1,hLine2] = plotyy(Pase(s).t{Pase(s).max_idx}, ...
+        Pase(s).range{Pase(s).max_idx}, ...
+        Pase(s).t{Pase(s).max_idx}, CN((1:Pase(s).max_idx),s));
+    xlabel('Tiempo de ')
+    ylabel(hAx(1),'Range [km]') % left y-axis
+    ylabel(hAx(2),'C/N [dB]') % right y-axis
+    grid on; box on;
 end
-xlabel('UTC Time')
-ylabel(hAx(1),'Range [km]') % left y-axis
-ylabel(hAx(2),'C/N [dB]') % right y-axis
-grid on; box on;
+
 
 
 % PLOT 60 dias

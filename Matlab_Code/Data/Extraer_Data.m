@@ -54,6 +54,7 @@ end
 
 save('Angulos.mat', 'Angulos')
 save('Pase.mat', 'Pase')
+save('idx.mat')
 
 % Read MODCOD
 [data,txtdata] = xlsread('MODCOD.xlsx');
