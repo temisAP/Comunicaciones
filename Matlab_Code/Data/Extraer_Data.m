@@ -31,7 +31,7 @@ for s = 1:length(sheets)
     Angulos(s).elevation(idx) = [];
     Angulos(s).range(idx) = [];
     %}
-    Angulos(s).t_num = datenum(string(Angulos(s).t), 'dd-mmm-yyyy HH:MM:SS');
+    Angulos(s).t_num = datenum(string(Angulos(s).t), 'dd-mmm-yyyy HH:MM:SS')*3600*24;
     Angulos(s).t_num = Angulos(s).t_num - Angulos(s).t_num(1);
     Angulos(s).F = ischange(Angulos(s).t_num,'Threshold', 3e-4); % Vector que detecta el cambio de pase
     Angulos(s).indice = find(Angulos(s).F)-1; % Indice donde se produce este cambio
@@ -39,6 +39,11 @@ for s = 1:length(sheets)
 end
 
 save('Angulos.mat', 'Angulos')
+
+[data,txtdata] = xlsread('MODCOD.xlsx');
+modcod = [data(:,1) flip(data(:,[3,4]))];
+
+save('MODCOD.mat', 'modcod')
 
 %% PLOT
 

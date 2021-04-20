@@ -19,15 +19,19 @@ La = 3;             % [dB] Losses due to gas abps, rain attenuation...
 load('Angulos.mat');
 load('Access.mat');
 
+
 %% Antenna gain
 lambda = c/f;
 G = 10*log10(rend_antenna*(pi*D_antenna/lambda)^2);
 
+
 %% Noise temperature of receiver
 T_receiver = T_antenna + T0*(10^(NF/10)-1); % [K]
 
+
 %% G/T ground station
 GT = G - 10*log10(T_receiver);              % [dB]
+
 
 %% Free space losses during the pass each 10 seconds
 
@@ -37,6 +41,7 @@ for s = 1:length(Angulos)
         Lp(i,s) = 20*log10(4*pi*R/lambda);
     end
 end
+
 
 %% C/N of the link
 
@@ -51,12 +56,10 @@ time = [0:10:Access(1).duration(1)*60];
 for s = 1:length(Access)
     h = figure(s);
     hold on
-    [hAx,hLine1,hLine2] = plotyy(Angulos(s).t(1:Angulos(s).indice(1)) , ...
-        Angulos(s).range(1:An
-    gulos(s).indice(1)), ...
-        Angulos(s).t(1:Angulos(s).indice(1)), CN((1:Angulos(s).indice(1)
-    ),s));
-    xlabel('UTC Time')
+    [hAx,hLine1,hLine2] = plotyy(Angulos(s).t_num(1:Angulos(s).indice(1)) , ...
+        Angulos(s).range(1:Angulos(s).indice(1)), ...
+        Angulos(s).t_num(1:Angulos(s).indice(1)), CN((1:Angulos(s).indice(1)),s));
+    xlabel('Tiempo de ')
     ylabel(hAx(1),'Range [km]') % left y-axis
     ylabel(hAx(2),'C/N [dB]') % right y-axis
     grid on; box on;
