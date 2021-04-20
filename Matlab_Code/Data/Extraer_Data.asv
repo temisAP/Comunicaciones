@@ -13,7 +13,6 @@ angulo = [10, 20, 30];
 %% ELEVATION 
 
 Angulos = struct();
-Pase = struct();
 
 for s = 1:length(sheets)
     [data,txtdata] = xlsread(filename,sheets(s));
@@ -32,30 +31,17 @@ for s = 1:length(sheets)
     Angulos(s).elevation(idx) = [];
     Angulos(s).range(idx) = [];
     %}
-    Angulos(s).t_num = datenum(string(Angulos(s).t), 'dd-mmm-yyyy HH:MM:SS');
+    Angulos(s).t_num = datenum(string(Angulos(s).t), 'dd-mmm-yyyy HH:MM:SS')*3600*24;
     Angulos(s).t_num = Angulos(s).t_num - Angulos(s).t_num(1);
-    Angulos(s).F = ischange(Angulos(s).t_num, 'Threshold', 3e-4); % Vector que detecta el cambio de pase
-    idx = find(Angulos(s).F == 1);
-    Angulos(s).t_num = Angulos(s).t_num*24*3600;
+    Angulos(s).F = ischange(Angulos(s).t_num,'Threshold', 3e-4); % Vector que detecta el cambio de pase
     
-    Pase(s).angulo = names{s};
-    Pase(s).t{1} = Angulos(s).t_num(1:(idx(1)-1)) - Angulos(s).t_num(1);
-    Pase(s).duracion(1) = Pase(s).t{1}(end);
-    Pase(s).range{1} = Angulos(s).range(1:(idx(1)-1));
-    for p = 2:length(idx)-1
-        Pase(s).t{p} = Angulos(s).t_num(idx(p):(idx(p+1)-1)) - Angulos(s).t_num(idx(p));
-        Pase(s).duracion(p) = Pase(s).t{p}(end);
-        Pase(s).range{p} = Angulos(s).range(idx(p):(idx(p+1)-1));
-    end
     
-    [Pase(s).max_t, Pase(s).max_idx] = max(Pase(s).duracion);
-
+    Angulos(s).indice = find(Angulos(s).F)-1; % Indice donde se produce este cambio
+      
 end
 
 save('Angulos.mat', 'Angulos')
-save('Pase.mat', 'Pase')
 
-% Read MODCOD
 [data,txtdata] = xlsread('MODCOD.xlsx');
 modcod = [data(:,1) flip(data(:,[3,4]))];
 
