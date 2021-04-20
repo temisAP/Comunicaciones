@@ -19,7 +19,6 @@ for s = 1:length(sheets)
     
     Angulos(s).Name = names{s};
     Angulos(s).t = datetime(txtdata(2:end,1),'InputFormat','dd MMM yyyy HH:mm:ss,SSS'); 
-    Angulos(s).t_num = datenum(string(Angulos(s).t), 'dd-mmm-yyyy HH:MM:SS');
     Angulos(s).azimuth = data(:,1);
     Angulos(s).elevation = data(:,2);
     Angulos(s).range = data(:,3);  
@@ -32,9 +31,10 @@ for s = 1:length(sheets)
     Angulos(s).elevation(idx) = [];
     Angulos(s).range(idx) = [];
     %}
-    
-    
-    
+    Angulos(s).t_num = datenum(string(Angulos(s).t), 'dd-mmm-yyyy HH:MM:SS');
+    Angulos(s).F = ischange(Angulos(s).t_num,'Threshold', 3e-4); % Vector que detecta el cambio de pase
+    Angulos(s).indice = find(Angulos(s).F)-1; % Indice donde se produce este cambio
+      
 end
 
 save('Angulos.mat', 'Angulos')

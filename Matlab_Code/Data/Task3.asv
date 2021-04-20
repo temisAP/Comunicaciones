@@ -48,18 +48,15 @@ end
 
 %% PLOTS
 time = [0:10:Access(1).duration(1)*60];
-for s = 1:length(Access)
+for s = 1:length(Angulo(s).num)
     h = figure(s);
     hold on
-    [hAx,hLine1,hLine2] = plotyy(Angulos(s).t(1:Angulos(s).indice(1)) , ...
-        Angulos(s).range(1:Angulos(s).indice(1)), ...
-        Angulos(s).t(1:Angulos(s).indice(1)), CN((1:Angulos(s).indice(1)),s));
-    xlabel('UTC Time')
-    ylabel(hAx(1),'Range [km]') % left y-axis
-    ylabel(hAx(2),'C/N [dB]') % right y-axis
-    grid on; box on;
+    [hAx,hLine1,hLine2] = plotyy(Angulos(s).t(1:33) , Angulos(s).range(1:33), Angulos(s).t(1:33), CN((1:33),s));
 end
-
+xlabel('UTC Time')
+ylabel(hAx(1),'Range [km]') % left y-axis
+ylabel(hAx(2),'C/N [dB]') % right y-axis
+grid on; box on;
 
 
 % PLOT 60 dias
