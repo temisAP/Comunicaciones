@@ -52,8 +52,10 @@ for s = 1:length(Access)
     h = figure(s);
     hold on
     [hAx,hLine1,hLine2] = plotyy(Angulos(s).t(1:Angulos(s).indice(1)) , ...
-        Angulos(s).range(1:Angulos(s).indice(1)), ...
-        Angulos(s).t(1:Angulos(s).indice(1)), CN((1:Angulos(s).indice(1)),s));
+        Angulos(s).range(1:An
+    gulos(s).indice(1)), ...
+        Angulos(s).t(1:Angulos(s).indice(1)), CN((1:Angulos(s).indice(1)
+    ),s));
     xlabel('UTC Time')
     ylabel(hAx(1),'Range [km]') % left y-axis
     ylabel(hAx(2),'C/N [dB]') % right y-axis
