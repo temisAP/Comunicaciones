@@ -4,7 +4,7 @@ close all
 
 %% LEER DATOS
 
-filename = 'Elevation.xlsx';
+filename = 'Range.xlsx';
 xlRange = 'A2:D2';
 sheets = [1,2,3];
 names = {'10 deg', '20 deg', '30 deg'};
@@ -58,7 +58,7 @@ save('idx.mat')
 
 % Read MODCOD
 [data,txtdata] = xlsread('MODCOD.xlsx');
-modcod = [data(:,1) flip(data(:,[3,4]))];
+modcod = (data(:,[3,4]));
 
 save('MODCOD.mat', 'modcod')
 
