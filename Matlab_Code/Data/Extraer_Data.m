@@ -4,7 +4,7 @@ close all
 
 %% LEER DATOS
 
-filename = 'Range.xlsx';
+filename = 'Access_1s.xlsx';
 xlRange = 'A2:D2';
 sheets = [1,2,3];
 names = {'10 deg', '20 deg', '30 deg'};
@@ -34,7 +34,7 @@ for s = 1:length(sheets)
     %}
     Angulos(s).t_num = datenum(string(Angulos(s).t), 'dd-mmm-yyyy HH:MM:SS');
     Angulos(s).t_num = Angulos(s).t_num - Angulos(s).t_num(1);
-    Angulos(s).F = ischange(Angulos(s).t_num, 'Threshold', 3e-4); % Vector que detecta el cambio de pase
+    Angulos(s).F = ischange(Angulos(s).t_num, 'Threshold', 1e-2); % Vector que detecta el cambio de pase
     idx = find(Angulos(s).F == 1);
     Angulos(s).t_num = Angulos(s).t_num*24*3600;
     
@@ -53,14 +53,16 @@ for s = 1:length(sheets)
 end
 
 save('Angulos.mat', 'Angulos')
-save('Pase.mat', 'Pase')
-save('idx.mat')
+save('Pase_1s.mat', 'Pase')
+% save('idx.mat')
+
 
 % Read MODCOD
 [data,txtdata] = xlsread('MODCOD.xlsx');
-modcod = (data(:,[3,4]));
+modcod = (data(:,[1,3,4]));
 
 save('MODCOD.mat', 'modcod')
+
 
 %% PLOT
 

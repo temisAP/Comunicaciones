@@ -18,8 +18,7 @@ EIRP = 22;          % [dBW]
 La = 3;             % [dB] Losses due to gas abps, rain attenuation... 
 load('Angulos.mat');
 load('Access.mat');
-load('Pase.mat');
-load('idx.mat')
+load('Pase_1s.mat');
 load('MODCOD.mat');
 
 
@@ -62,7 +61,7 @@ for s = 1:length(Access)
     grid on; box on;
 end
 
-save('Pase_CN.mat','Pase');
+save('Pase_CN_1s.mat','Pase');
 
 % PLOT 60 dias
 % h = figure();
