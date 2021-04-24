@@ -6,8 +6,17 @@ close all
 load('Data/MODCOD.mat')
 load('Data/Pase_CN_1s.mat')
 
+modcod = zeros(length(MODCOD),3);
+for i = 1:length(MODCOD)
+modcod(i,1) = MODCOD(i).Index;
+modcod(i,2) = MODCOD(i).CN;
+modcod(i,3) = MODCOD(i).Efficiency;
+end
+
 t_choose = 10;  %s
 t_mod    = 30;  %s
+
+%% Cálculo
 
 for a = 1:length(Pase)
     for p = 1:length(Pase(a).CN)
@@ -101,21 +110,53 @@ for a = 1:length(Pase)
     end
 end
 
-    
+%% Plot    
+
 for a = 1:3
     for p = 1:3
         figure()
             hold on
-            plot(Pase(a).t{p}, Pase(a).MC{p}, 'LineWidth', 2, 'DisplayName', 'Modulacion')
-            plot(Pase(a).t{p}, Pase(a).MCef{p}, 'DisplayName', 'Eficiencia')
-            plot(Pase(a).t{p}, Pase(a).CN{p}, 'DisplayName', 'C/N')
-            %legend()
-            title(['Angulo ' num2str(a) ' Pase ' num2str(p)])
+            plt(1) = stairs(Pase(a).t{p}, Pase(a).MC{p}, 'LineWidth', 1.2, 'DisplayName', 'Modulacion [dB]');
+            plt(2) = stairs(Pase(a).t{p}, Pase(a).MCef{p}, 'DisplayName', 'Eficiencia [bps/Hz]');
+            plt(3) = stairs(Pase(a).t{p}, Pase(a).CN{p}, 'DisplayName', 'C/N [dB]');
             for i = 1:9
-                plot([0:600], modcod(i,2)*ones(1,601),'k')
+                plot([0:length(Pase(a).t{p})], modcod(i,2)*ones(1,length(Pase(a).t{p})+1),'--', 'LineWidth', 0.5, 'Color','k')
             end
+            f = get(gca,'Children');
+            legend([plt(1:3)])
+            xlabel('Tiempo [s]')
+            title(['Angulo ' num2str(a) ' Pase ' num2str(p)])
 
     end
 end
 
+%% Table
+
+for a = 1:length(Pase)
+    
+    clear tables
+    for p = 1:length(Pase(a).CN)
+        
+        tpase = length(Pase(a).t{p});
+        
+        for idx = 1:length(MODCOD)           
+            fnd = find(Pase(a).MC{p} == MODCOD(idx).CN);
+            duraciones(idx) = length(fnd);
+            porcentajes(idx) = duraciones(idx)/tpase * 100;
+        end
+              
+     tables{p} = struct('Modulacion',{MODCOD(:).Label},'Duracion',num2cell(duraciones),'Porcentaje',num2cell(porcentajes));
+
+    end
+    
+    Pase(a).MODCOD_table = {tables{:}};
+    
+end
+
+%%
+
+for a = 1:length(Pase)
+        
+end
+     
 save('Data/Pase_CN_1s.mat', 'Pase')

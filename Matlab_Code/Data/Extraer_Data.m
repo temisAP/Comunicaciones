@@ -57,11 +57,19 @@ save('Pase_1s.mat', 'Pase')
 % save('idx.mat')
 
 
-% Read MODCOD
-[data,txtdata] = xlsread('MODCOD.xlsx');
-modcod = (data(:,[1,3,4]));
+%% Read MODCOD
 
-save('MODCOD.mat', 'modcod')
+[data,txtdata] = xlsread('MODCOD.xlsx');
+index = data(:,1);
+CN_req = data(:,3);
+EFF = data(:,4);
+modcod_txt = cell(length(txtdata)-1,1);
+for i = 2:length(txtdata)
+modcod_txt{i-1} = txtdata{i,2};
+end
+
+MODCOD = struct('Index',num2cell(index),'Label',modcod_txt,'CN',num2cell(CN_req),'Efficiency',num2cell(EFF));
+save('MODCOD.mat', 'MODCOD')
 
 
 %% PLOT
