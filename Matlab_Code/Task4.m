@@ -113,7 +113,7 @@ end
 %% Plot    
 
 for a = 1:3
-    figure()
+    h = figure();
         hold on
         stairs(Pase(a).t{Pase(a).max_idx}, Pase(a).MC{Pase(a).max_idx}, 'LineWidth', 2, 'DisplayName', "Modulaci\'on [dB]");
         plot(Pase(a).t{Pase(a).max_idx}, Pase(a).CN{Pase(a).max_idx}, 'LineWidth', 2, 'DisplayName', "C/N [dB]");
@@ -129,6 +129,15 @@ for a = 1:3
         set(gca,'LabelFontSizeMultiplier',1.35);
         set(gca,'TitleFontSizeMultiplier',1.25)
         grid on; box on;
+        
+        set(h,'Units','Inches');
+        
+        pos = get(h,'Position');
+        %set(gcf,'PaperUnits','inches','PaperPosition',[0 0 pos(3), pos(4)])
+        set(gcf,'PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
+        %set(gca,'units','pix','pos',[100,100,500,300])
+        print(h, '-dpng', 'filename','-r750','-painters')
+
 end
 
 %% Table
