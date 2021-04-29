@@ -96,10 +96,7 @@ for a = 1:length(Pase)
                         Pase(a).MCef{p}(t) = Pase(a).MCef{p}(t-1);
                     end
                 catch
-
-                    
-                    
-                   
+ 
                 end
 
             end
@@ -111,6 +108,7 @@ for a = 1:length(Pase)
 end
 
 %% Plot    
+
 
 for a = 1:3
     h = figure();
@@ -136,12 +134,13 @@ for a = 1:3
         %set(gcf,'PaperUnits','inches','PaperPosition',[0 0 pos(3), pos(4)])
         set(gcf,'PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
         %set(gca,'units','pix','pos',[100,100,500,300])
-        print(h, '-dpng', 'filename','-r750','-painters')
+        %print(h, '-dpng', 'filename','-r750','-painters')
 
 end
 
+
 %% Table
-%{
+
 for a = 1:length(Pase)
     
     clear tables
@@ -160,13 +159,12 @@ for a = 1:length(Pase)
     end
     
     Pase(a).MODCOD_table = {tables{:}};
+    Pase(a).table = struct2table(Pase(a).MODCOD_table{Pase(a).max_idx});
+    % filename = ['Tables/Tabla_' Pase(a).angulo(1:2) '.xlsx'];
+    % writetable(Pase(a).table, filename,'Sheet',1)
     
 end
-%}
-%%
 
-for a = 1:length(Pase)
-        
-end
+%%
      
 save('Data/Pase_CN_1s.mat', 'Pase')
