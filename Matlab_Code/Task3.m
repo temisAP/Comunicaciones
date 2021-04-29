@@ -48,18 +48,29 @@ for s = 1:length(Pase)
 end
 
 %% PLOTS
+close all
+    lines = {'-', '--', ':'};
 
-for s = 1:length(Access)
     h = figure(s);
     hold on
-    [hAx,hLine1,hLine2] = plotyy(Pase(s).t{Pase(s).max_idx}, ...
-        Pase(s).range{Pase(s).max_idx}, ...
-        Pase(s).t{Pase(s).max_idx}, Pase(s).CN{Pase(s).max_idx});
-    xlabel('Tiempo de ')
-    ylabel(hAx(1),'Range [km]') % left y-axis
-    ylabel(hAx(2),'C/N [dB]') % right y-axis
-    grid on; box on;
+for s = 1:length(Access)
+    yyaxis left
+    plot(Pase(s).t{Pase(s).max_idx}, Pase(s).range{Pase(s).max_idx}, lines{s}, 'LineWidth', 2, 'DisplayName', [Pase(s).angulo])
+    yyaxis right
+    plot(Pase(s).t{Pase(s).max_idx}, Pase(s).CN{Pase(s).max_idx}, lines{s}, 'LineWidth', 2, 'DisplayName', [Pase(s).angulo])
+        
 end
+    xlabel('Tiempo [s]','Interpreter', 'Latex')
+    yyaxis left
+    ylabel('Range [km]','Interpreter', 'Latex')
+    yyaxis right
+    ylabel('C/N [dB]','Interpreter', 'Latex')
+    legend('Interpreter', 'Latex')
+    set(gca,'TickLabelInterpreter','latex');
+    set(gca,'FontSize',10.5);
+    set(gca,'LabelFontSizeMultiplier',1.35);
+    set(gca,'TitleFontSizeMultiplier',1.25)
+    grid on; box on;
 
 save('Data/Pase_CN_1s.mat','Pase');
 

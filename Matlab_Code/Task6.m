@@ -25,3 +25,9 @@ for a = 1:length(Pase)
     Pase(a).D.Download_raw = Pase(a).D.media_Pase/f_raw;
     Pase(a).D.Download_comp = Pase(a).D.media_Pase/f_comp;
 end
+
+
+
+
+
+

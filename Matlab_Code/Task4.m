@@ -113,25 +113,26 @@ end
 %% Plot    
 
 for a = 1:3
-    for p = 1:3
-        figure()
-            hold on
-            plt(1) = stairs(Pase(a).t{p}, Pase(a).MC{p}, 'LineWidth', 1.2, 'DisplayName', 'Modulacion [dB]');
-            plt(2) = stairs(Pase(a).t{p}, Pase(a).MCef{p}, 'DisplayName', 'Eficiencia [bps/Hz]');
-            plt(3) = stairs(Pase(a).t{p}, Pase(a).CN{p}, 'DisplayName', 'C/N [dB]');
-            for i = 1:9
-                plot([0:length(Pase(a).t{p})], modcod(i,2)*ones(1,length(Pase(a).t{p})+1),'--', 'LineWidth', 0.5, 'Color','k')
-            end
-            f = get(gca,'Children');
-            legend([plt(1:3)])
-            xlabel('Tiempo [s]')
-            title(['Angulo ' num2str(a) ' Pase ' num2str(p)])
-
-    end
+    figure()
+        hold on
+        stairs(Pase(a).t{Pase(a).max_idx}, Pase(a).MC{Pase(a).max_idx}, 'LineWidth', 2, 'DisplayName', "Modulaci\'on [dB]");
+        plot(Pase(a).t{Pase(a).max_idx}, Pase(a).CN{Pase(a).max_idx}, 'LineWidth', 2, 'DisplayName', "C/N [dB]");
+        f = get(gca,'Children');
+        box on; grid on
+        legend('Interpreter', 'Latex')
+        xlim([0, Pase(a).t{Pase(a).max_idx}(end)])
+        xlabel('Tiempo [s]','Interpreter', 'Latex')
+        ylabel('C/N [dB]','Interpreter', 'Latex')
+        title(['\textbf{\textit{' Pase(a).angulo '}}'],'Interpreter', 'Latex')
+        set(gca,'TickLabelInterpreter','latex');
+        set(gca,'FontSize',10.5);
+        set(gca,'LabelFontSizeMultiplier',1.35);
+        set(gca,'TitleFontSizeMultiplier',1.25)
+        grid on; box on;
 end
 
 %% Table
-
+%{
 for a = 1:length(Pase)
     
     clear tables
@@ -152,7 +153,7 @@ for a = 1:length(Pase)
     Pase(a).MODCOD_table = {tables{:}};
     
 end
-
+%}
 %%
 
 for a = 1:length(Pase)
