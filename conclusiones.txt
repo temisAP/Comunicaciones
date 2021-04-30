@@ -1,0 +1,13 @@
+In this workshop Sentinel 3 payload comunication has been analysed and an adaptive transmition scheme has been purposed. 
+
+Firstly, accesses with Svalvar has been obtained using STK software for a later obtencion of range and average pass duration depending on the minumum elevation angle. As there was expected larger passes corresponds with lower minumum elevation angles.
+
+Once timing and distance obtained, carrier to noise ratio have been calculated acording to enviromental parameters given. A can be seen in the figure given (in the corresponding task) lower minumum elevation means wider passes but carrier to noise ratio depends mainly of range beeing higher when the distance is lower close to middle of the pass.
+
+Then, for each pass, modulation had to be selected according to several constrains. Due to this constrains and possible modulation given, the resulting figure has a stair-like shape when a lower modulation is needed and maximizing bit rate when possible.
+
+Modulation efficience with a time and bandwith given, determines average and total downlinked data directly. Considering image size and compression rate, the ammount of downlinked data in turn determines the ammount of images downlinked per pass. As can be seen in the corresponding table compression leads to a higher ammount of images and have a higher influence for lower minimmun elevation angle due to the higher ammount of images.
+
+At the time of carrying out adaptative modulation schemes for space transmisions, the basic scheme barely differs from a non-adaptive modulation one, however an additional conexion with the on board computer must be taken into account as well as corresponding software and computer resources.
+
+In general terms, adaptative modulation means a wiser resource use and nowadays its implementation is quite simple so broadly satellites make use it. 
