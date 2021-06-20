@@ -16,7 +16,7 @@ NF = 2;             % [dB] Receiver noise figure
 T0 = 290;           % [K] 
 EIRP = 22;          % [dBW]
 La = 3;             % [dB] Losses due to gas abps, rain attenuation... 
-load('Data/Angulos.mat');
+% load('Data/Angulos.mat');
 load('Data/Access.mat');
 load('Data/Pase_1s.mat');
 load('Data/MODCOD.mat');
@@ -60,7 +60,7 @@ for s = 1:length(Access)
     plot(Pase(s).t{Pase(s).max_idx}, Pase(s).CN{Pase(s).max_idx}, lines{s}, 'LineWidth', 2, 'DisplayName', [Pase(s).angulo])
         
 end
-    xlabel('Tiempo [s]','Interpreter', 'Latex')
+    xlabel('t [s]','Interpreter', 'Latex')
     yyaxis left
     ylabel('Range [km]','Interpreter', 'Latex')
     yyaxis right
@@ -71,6 +71,12 @@ end
     set(gca,'LabelFontSizeMultiplier',1.35);
     set(gca,'TitleFontSizeMultiplier',1.25)
     grid on; box on;
+    
+        pos = get(h,'Position');
+        %set(gcf,'PaperUnits','inches','PaperPosition',[0 0 pos(3), pos(4)])
+        %set(gcf,'PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
+        %set(gca,'units','pix','pos',[100,100,500,300])
+        print(h, '-dpng', 'Figuras/CN_Range','-r750','-painters')
 
 save('Data/Pase_CN_1s.mat','Pase');
 

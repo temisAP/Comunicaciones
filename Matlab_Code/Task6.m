@@ -8,14 +8,13 @@ load('Data/Pase_CN_1s.mat')
 %% NUMERO DE IMAGENES Y PESO
 
 R = 6371e3;                                                                % [m]
-l = pi*R;
-bandas = 1;
-Nfotos = l/300/bandas;
+l = pi*R*0.7;
+Nfotos = l/300;
 
 datos = 18.5e3;
 
 f_raw = datos/Nfotos;
-comp_rate = 0.8;
+comp_rate = 0.9;
 f_comp = f_raw*comp_rate;
 
 
